@@ -1,0 +1,14 @@
+# Node.js dependencies
+node_modules/
+dist/
+build/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Environment variables
+.env
+
+# Docker artifacts
+docker-compose.override.yml
