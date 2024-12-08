@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npx tsc",
     "jasmine": "jasmine",
-    "test": "ENV=test && npm run build && npm run migrate:test:up && npm run jasmine; npm run migrate:test:reset",
+    "test": "npm run build && npm run migrate:test:up && npm run jasmine; npm run migrate:test:reset",
     "dev": "npm run migrate:dev:up && nodemon src/server.ts",
     "migrate:dev:up": "db-migrate up --env dev",
     "migrate:dev:down": "db-migrate down --env dev",
@@ -19,6 +19,7 @@
   "description": "",
   "dependencies": {
     "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "jasmine": "^5.4.0",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jasmine": "^5.1.5",
     "@types/node": "^22.10.1",
