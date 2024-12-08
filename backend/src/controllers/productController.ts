@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Product, ProductStore } from "../models/Product";
 
+console.log(ProductStore);
 const store = new ProductStore();
 
 export const getAllProducts = async (_req: Request, res: Response) => {
@@ -19,6 +20,7 @@ export const getProductById = async (req: Request, res: Response) => {
     const product: Product = await store.getById(req.params.id);
     res.json(product);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };

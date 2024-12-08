@@ -4,15 +4,16 @@
     "host": "localhost",
     "port": "7000",
     "database": "dev_database",
-    "user": "dev_user",
-    "password": "dev_password"
+    "user": "db_user",
+    "password": "db_password"
   },
   "test": {
     "driver": "pg",
     "host": "localhost",
-    "port": "7001",
+    "port": "7000",
     "database": "test_database",
-    "user": "test_user",
-    "password": "test_password"
-  }
+    "user": "db_user",
+    "password": "db_password"
+  },
+  "migrations-dir": "migrations"
 }

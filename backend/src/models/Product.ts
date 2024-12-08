@@ -1,4 +1,4 @@
-import { dbClient as client } from "../server";
+import dbClient from "../config/db";
 
 export type Product = {
   id?: number;
@@ -11,7 +11,7 @@ export class ProductStore {
   async getAll(): Promise<Product[]> {
     let conn;
     try {
-      conn = await client.connect();
+      conn = await dbClient.connect();
       const result = await conn.query("SELECT * FROM products");
       return result.rows;
     } catch (err) {
@@ -24,9 +24,9 @@ export class ProductStore {
   }
 
   async getById(id: string): Promise<Product> {
-    const conn = await client.connect();
+    const conn = await dbClient.connect();
     try {
-      const result = await conn.query("SELECT * FROM books WHERE id=($1)", [
+      const result = await conn.query("SELECT * FROM products WHERE id=($1)", [
         id
       ]);
       return result.rows[0];
@@ -38,7 +38,7 @@ export class ProductStore {
   }
 
   async create(product: Product): Promise<Product> {
-    const conn = await client.connect();
+    const conn = await dbClient.connect();
     try {
       const result = await conn.query(
         "INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *",

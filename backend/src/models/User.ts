@@ -1,16 +1,16 @@
-import { dbClient as client } from "../server";
+import dbClient from "../config/db";
 
 export type User = {
   id?: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   password: string;
 };
 
 export class UserStore {
   async getAll(): Promise<User[]> {
     try {
-      const conn = await client.connect();
+      const conn = await dbClient.connect();
       const sql = "SELECT * FROM users";
       const result = await conn.query(sql);
       conn.release();
@@ -20,10 +20,10 @@ export class UserStore {
     }
   }
 
-  async getById(id: string): Promise<User> {
+  async getById(id: number): Promise<User> {
     try {
       const sql = "SELECT * FROM users WHERE id=($1)";
-      const conn = await client.connect();
+      const conn = await dbClient.connect();
       const result = await conn.query(sql, [id]);
       conn.release();
       return result.rows[0];
@@ -34,19 +34,20 @@ export class UserStore {
 
   async create(u: User): Promise<User> {
     try {
+      console.log(u);
       const sql =
-        "INSERT INTO users (firstName, lastName, password) VALUES($1, $2, $3) RETURNING *";
-      const conn = await client.connect();
+        "INSERT INTO users (firstname, lastname, password) VALUES($1, $2, $3) RETURNING *";
+      const conn = await dbClient.connect();
       const result = await conn.query(sql, [
-        u.firstName,
-        u.lastName,
+        u.firstname,
+        u.lastname,
         u.password
       ]);
       const user = result.rows[0];
       conn.release();
       return user;
     } catch (err) {
-      throw new Error(`Could not add new user ${u.firstName}. Error: ${err}`);
+      throw new Error(`Could not add new user ${u.firstname}. Error: ${err}`);
     }
   }
 }
