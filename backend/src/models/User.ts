@@ -1,4 +1,5 @@
 import dbClient from "../config/db";
+import bcrypt from "bcrypt";
 
 export type User = {
   id?: number;
@@ -33,15 +34,25 @@ export class UserStore {
   }
 
   async create(u: User): Promise<User> {
+    const saltRounds = parseInt(process.env.SALT_ROUNDS || "-1");
+    const pepper = process.env.BCRYPT_PASSWORD;
+    if (!pepper) {
+      throw new Error("Missing BCRYPT_PASSWORD environment variable");
+    }
+    if (saltRounds <= 0) {
+      throw new Error("Missing SALT_ROUNDS rounds environment variable");
+    }
+
+    const hashedPassword = bcrypt.hashSync(u.password + pepper, saltRounds);
+
     try {
-      console.log(u);
       const sql =
         "INSERT INTO users (firstname, lastname, password) VALUES($1, $2, $3) RETURNING *";
       const conn = await dbClient.connect();
       const result = await conn.query(sql, [
         u.firstname,
         u.lastname,
-        u.password
+        hashedPassword
       ]);
       const user = result.rows[0];
       conn.release();
@@ -49,5 +60,31 @@ export class UserStore {
     } catch (err) {
       throw new Error(`Could not add new user ${u.firstname}. Error: ${err}`);
     }
+  }
+
+  async authenticate(
+    firstname: string,
+    lastname: string,
+    password: string
+  ): Promise<User | null> {
+    const conn = await dbClient.connect();
+    const sql = "SELECT password FROM users WHERE firstname=$1 AND lastname=$2";
+    const result = await conn.query(sql, [firstname, lastname]);
+    conn.release();
+
+    if (result.rows.length) {
+      const user = result.rows[0];
+
+      const pepper = process.env.BCRYPT_PASSWORD;
+      if (!pepper) {
+        throw new Error("Missing BCRYPT_PASSWORD environment variable");
+      }
+
+      if (bcrypt.compareSync(password + pepper, user.password)) {
+        return user;
+      }
+    }
+
+    return null;
   }
 }

@@ -40,7 +40,7 @@ describe("User Model", () => {
     console.log("result", result);
     expect(result.firstname).toEqual(user1.firstname);
     expect(result.lastname).toEqual(user1.lastname);
-    expect(result.password).toEqual(user1.password);
+    expect(result.password).not.toEqual(user1.password);
   });
 
   it("should return a list of users", async () => {
@@ -55,5 +55,33 @@ describe("User Model", () => {
 
     expect(result.id).toBeDefined();
     expect(result).toEqual(await userStore.getById(result.id || 0));
+  });
+
+  it("should authenticate a user with valid credentials", async () => {
+    const result = await userStore.create({
+      firstname: "John",
+      lastname: "Doe",
+      password: "XXXXXXXXXXX"
+    });
+    const isAuthenticated = await userStore.authenticate(
+      result.firstname,
+      result.lastname,
+      "XXXXXXXXXXX"
+    );
+    expect(isAuthenticated).not.toBeNull();
+  });
+
+  it("should not authenticate a user with invalid credentials", async () => {
+    const result = await userStore.create({
+      firstname: "John",
+      lastname: "Doe",
+      password: "XXXXXXXXXXX"
+    });
+    const isAuthenticated = await userStore.authenticate(
+      result.firstname,
+      result.lastname,
+      "wrongpassword"
+    );
+    expect(isAuthenticated).toBeNull();
   });
 });
