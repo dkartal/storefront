@@ -65,4 +65,27 @@ export class OrderStore {
       conn.release();
     }
   }
+
+  async addProduct(
+    orderId: number,
+    productId: number,
+    quantity: number
+  ): Promise<Order> {
+    const conn = await dbClient.connect();
+    try {
+      const orderResult = await conn.query(
+        "INSERT INTO order_products (order_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *",
+        [orderId, productId, quantity]
+      );
+
+      const result = orderResult.rows[0];
+
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw new Error(`Could not create new order.`);
+    } finally {
+      conn.release();
+    }
+  }
 }

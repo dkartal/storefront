@@ -12,3 +12,7 @@ build/
 
 # Docker artifacts
 docker-compose.override.yml
+.vscode
+
+# exclude frontend for now
+frontend

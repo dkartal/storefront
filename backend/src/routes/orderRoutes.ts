@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addProduct,
   createOrder,
   getCompletedOrdersByUserId,
   getCurrentOrderByUserId
@@ -7,8 +8,9 @@ import {
 
 const router = Router();
 
-router.get("/:id", getCurrentOrderByUserId);
-router.get("/completed/:id", getCompletedOrdersByUserId);
+router.get("/active", getCurrentOrderByUserId);
+router.get("/completed", getCompletedOrdersByUserId);
 router.post("/", createOrder);
+router.post("/:id/products", addProduct);
 
 export default router;

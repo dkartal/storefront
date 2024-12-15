@@ -20,11 +20,13 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "jasmine": "^5.4.0",
     "jasmine-spec-reporter": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5"
@@ -32,9 +34,11 @@
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jasmine": "^5.1.5",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.1",
     "@types/pg": "^8.11.10",
     "@typescript-eslint/eslint-plugin": "^8.17.0",

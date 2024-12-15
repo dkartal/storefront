@@ -1,14 +1,12 @@
-import { Request, Response } from "express";
+import { Response, Request } from "express";
 import { Product, ProductStore } from "../models/Product";
 
-console.log(ProductStore);
 const store = new ProductStore();
 
 export const getAllProducts = async (_req: Request, res: Response) => {
   try {
     const products: Product[] = await store.getAll();
-    console.log("products");
-    res.json(products);
+    res.status(200).json(products);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err });
@@ -36,6 +34,7 @@ export const createProduct = async (req: Request, res: Response) => {
     const newProduct: Product = await store.create(product);
     res.status(201).json(newProduct);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };

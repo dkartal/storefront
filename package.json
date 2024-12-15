@@ -1,0 +1,13 @@
+{
+  "name": "storefront",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start:database": "cd docker && docker compose up -d",
+    "dev:backend": "cd backend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "test:backend": "cd backend && npm run test"
+  },
+  "author": "",
+  "license": "ISC"
+}

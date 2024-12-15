@@ -29,31 +29,8 @@ export const createUser = async (req: Request, res: Response) => {
       lastname: req.body.lastname,
       password: req.body.password
     };
-    await store.create(user);
-    res.status(201).json(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: err });
-  }
-};
-
-export const loginUser = async (req: Request, res: Response) => {
-  try {
-    const user: User = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      password: req.body.password
-    };
-    const authenticatedUser = await store.authenticate(
-      user.firstname,
-      user.lastname,
-      user.password
-    );
-    if (authenticatedUser) {
-      res.status(200).json(authenticatedUser);
-    } else {
-      res.status(401).json({ error: "Invalid credentials" });
-    }
+    const created = await store.create(user);
+    res.status(201).json(created);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err });
