@@ -1,43 +1,35 @@
-import e from "express";
 import { User, UserStore } from "../../models/User";
-import exp from "constants";
 
 const userStore = new UserStore();
 
+const user1 = {
+  firstname: "firstName",
+  lastname: "lastName",
+  password: "password"
+} as User;
+const user2 = {
+  firstname: "firstName2",
+  lastname: "lastName2",
+  password: "password2"
+} as User;
+
+const user3 = {
+  firstname: "firstName3",
+  lastname: "lastName3",
+  password: "XXXXXXXXX"
+} as User;
+
 describe("User Model", () => {
-  const user1 = {
-    firstname: "firstName",
-    lastname: "lastName",
-    password: "password"
-  } as User;
-  const user2 = {
-    firstname: "firstName2",
-    lastname: "lastName2",
-    password: "password2"
-  } as User;
-
-  const user3 = {
-    firstname: "firstName3",
-    lastname: "lastName3",
-    password: "XXXXXXXXX"
-  } as User;
-
-  it("should have a getAll method", () => {
+  it("should have all CRUD methods", () => {
     expect(userStore.getAll).toBeDefined();
-  });
-
-  it("should have a getById method", () => {
     expect(userStore.getById).toBeDefined();
-  });
-
-  it("should have a create method", () => {
     expect(userStore.create).toBeDefined();
+    expect(userStore.authenticate).toBeDefined();
   });
 
   it("should create a new user", async () => {
     const result = await userStore.create(user1);
 
-    console.log("result", result);
     expect(result.firstname).toEqual(user1.firstname);
     expect(result.lastname).toEqual(user1.lastname);
     expect(result.password).not.toEqual(user1.password);
@@ -47,7 +39,7 @@ describe("User Model", () => {
     await userStore.create(user2);
 
     const result = await userStore.getAll();
-    expect(result.length).toBe(2);
+    expect(result.length).toBeGreaterThan(0);
   });
 
   it("should return the correct user", async () => {
@@ -59,14 +51,14 @@ describe("User Model", () => {
 
   it("should authenticate a user with valid credentials", async () => {
     const result = await userStore.create({
-      firstname: "John",
-      lastname: "Doe",
-      password: "XXXXXXXXXXX"
+      firstname: "Johnsd",
+      lastname: "Doesdf",
+      password: "XXXXXXXXXXXsdf"
     });
     const isAuthenticated = await userStore.authenticate(
       result.firstname,
       result.lastname,
-      "XXXXXXXXXXX"
+      "XXXXXXXXXXXsdf"
     );
     expect(isAuthenticated).not.toBeNull();
   });

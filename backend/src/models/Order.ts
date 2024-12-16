@@ -4,17 +4,39 @@ export type Order = {
   id?: number;
   user_id: number;
   order_status?: "active" | "complete";
-  products: { product_id: number; quantity: number }[];
+  products: OrderProduct[];
 };
 
+export type OrderProduct = {
+  product_id: number;
+  quantity: number;
+};
 export class OrderStore {
+  sql = `
+      SELECT 
+        o.id,
+        o.user_id,
+        o.order_status,
+        json_agg(
+          json_build_object(
+            'product_id', op.product_id,
+            'quantity', op.quantity
+          )
+        ) AS products
+      FROM 
+        orders o
+      JOIN 
+        order_products op ON o.id = op.order_id
+      WHERE 
+        o.user_id = $1 AND o.order_status = $2
+      GROUP BY 
+        o.id, o.user_id, o.order_status;
+      `;
+
   async getCurrentOrderById(user_id: number): Promise<Order> {
     try {
       const conn = await dbClient.connect();
-      const result = await conn.query(
-        "SELECT * FROM orders WHERE user_id = $1 AND order_status = $2",
-        [user_id, "active"]
-      );
+      const result = await conn.query(this.sql, [user_id, "active"]);
       conn.release();
       return result.rows[0];
     } catch (err) {
@@ -25,10 +47,7 @@ export class OrderStore {
   async getCompletedOrdersByUserId(user_id: number): Promise<Order[]> {
     try {
       const conn = await dbClient.connect();
-      const result = await conn.query(
-        "SELECT * FROM orders WHERE user_id = $1 AND order_status = $2",
-        [user_id, "complete"]
-      );
+      const result = await conn.query(this.sql, [user_id, "active"]);
       conn.release();
       return result.rows;
     } catch (err) {
@@ -57,7 +76,10 @@ export class OrderStore {
 
       await conn.query("COMMIT");
 
-      return createOrder;
+      return {
+        ...createOrder,
+        products: order.products
+      };
     } catch (err) {
       await conn.query("ROLLBACK");
       throw new Error(`Could not create new order. Error: ${err}`);

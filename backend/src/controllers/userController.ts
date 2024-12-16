@@ -6,8 +6,7 @@ const store = new UserStore();
 export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const users: User[] = await store.getAll();
-    res.json(users);
-    console.log(users[0].id);
+    res.status(200).json(users);
   } catch (err) {
     res.status(500).json({ error: err });
   }

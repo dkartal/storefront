@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": ".src/index.js",
   "scripts": {
+    "start": "node ./build/server.js",
     "build": "npx tsc",
     "jasmine": "jasmine",
     "test": "npm run build && npm run migrate:test:up && npm run jasmine; npm run migrate:test:reset",
@@ -29,7 +30,8 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.5"
+    "sequelize": "^6.37.5",
+    "supertest": "^7.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
@@ -41,6 +43,7 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.1",
     "@types/pg": "^8.11.10",
+    "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
     "db-migrate": "^0.11.14",

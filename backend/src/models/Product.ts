@@ -23,7 +23,7 @@ export class ProductStore {
     }
   }
 
-  async getById(id: string): Promise<Product> {
+  async getById(id: number): Promise<Product> {
     const conn = await dbClient.connect();
     try {
       const result = await conn.query("SELECT * FROM products WHERE id=($1)", [

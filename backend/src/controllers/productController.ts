@@ -15,8 +15,8 @@ export const getAllProducts = async (_req: Request, res: Response) => {
 
 export const getProductById = async (req: Request, res: Response) => {
   try {
-    const product: Product = await store.getById(req.params.id);
-    res.json(product);
+    const product: Product = await store.getById(parseInt(req.params.id));
+    res.status(200).json(product);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err });

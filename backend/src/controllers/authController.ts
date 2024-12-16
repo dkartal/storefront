@@ -44,9 +44,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         secure: true,
         sameSite: "strict"
       });
+      console.log("refreshToken", refreshToken);
       res.status(200).json({ message: "Login successful" });
     } else {
-      res.status(403).json({ message: "Invalid credentials" });
+      res.status(401).json({ message: "Invalid credentials" });
     }
   } catch (err) {
     console.log(err);
@@ -67,6 +68,7 @@ export const refreshToken = async (
   }
 
   const refreshToken = req.cookies.refreshToken;
+  console.log("token", refreshToken);
 
   if (!refreshToken) {
     res.status(401).json({ error: "Refresh token not provided" });
