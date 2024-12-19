@@ -70,35 +70,35 @@
 
 #### Authentication
 
-| HTTP Method | Endpoint                  | Description      |
-| ----------- | ------------------------- | ---------------- |
-| `POST`      | `/api/auth/login`         | login            |
-| `POST`      | `/api/auth/logout`        | logout           |
+| HTTP Method | Endpoint                  | Description      | Request Body (Required Fields)    |
+| ----------- | ------------------------- | ---------------- | --------------------------------- |
+| `POST`      | `/api/auth/login`         | login            | { firstname, lastname, password } |
+| `POST`      | `/api/auth/logout`        | logout           | None                              |
 
 #### Products
 
-| HTTP Method | Endpoint            | Description         |
-| ----------- | ------------------- | ------------------- |
-| `GET`       | `/api/products`     | get all products    |
-| `GET`       | `/api/products/:id` | get a product by id |
-| `POST`      | `/api/products`     | create a product    |
+| HTTP Method | Endpoint            | Description         | Request Body (Required Fields) |
+| ----------- | ------------------- | ------------------- | -------------------------------|
+| `GET`       | `/api/products`     | get all products    | None                           |
+| `GET`       | `/api/products/:id` | get a product by id | None                           |
+| `POST`      | `/api/products`     | create a product    | { name, price, category }      |
 
 #### Users
 
-| HTTP Method | Endpoint         | Description                       |
-| ----------- | ---------------- | --------------------------------- |
-| `GET`       | `/api/users`     | get all users (token required)    |
-| `GET`       | `/api/users/:id` | get a user by ID (token required) |
-| `POST`      | `/api/users`     | create a user                     |
+| HTTP Method | Endpoint         | Description                       | Request Body (Required Fields)    |
+| ----------- | ---------------- | --------------------------------- | --------------------------------- | 
+| `GET`       | `/api/users`     | get all users (token required)    | None                              |
+| `GET`       | `/api/users/:id` | get a user by ID (token required) | None                              |
+| `POST`      | `/api/users`     | create a user                     | { firstname, lastname, password } |
 
 #### Orders
 
-| HTTP Method | Endpoint                   | Description              |
-| ----------- | -------------------------- | ------------------------ |
-| `GET`       | `/api/orders/active`       | get current active order |
-| `GET`       | `/api/orders/completed`    | get completed orders     |
-| `POST`      | `/api/orders`              | create a new order       |
-| `POST`      | `/api/orders/:id/products` | add product to an order  |
+| HTTP Method | Endpoint                   | Description              | Request Body (Required Fields) |
+| ----------- | -------------------------- | ------------------------ | ------------------------------ |
+| `GET`       | `/api/orders/active`       | get current active order | None                           |
+| `GET`       | `/api/orders/completed`    | get completed orders     | None                           |
+| `POST`      | `/api/orders`              | create a new order       | products                       |
+| `POST`      | `/api/orders/:id/products` | add product to an order  | { product_id, quantity }       |
 
 ## Models
 
