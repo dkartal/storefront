@@ -60,11 +60,11 @@
 
 5.  Run the server (make sure to set ENV to dev in .env before running dev)
 
-        npm run dev
+        npm run dev:backend
 
 6.  Run the tests (make sure to set ENV to test in .env before running test)
 
-        npm run test
+        npm run test:backend
 
 ## API Endpoints
 
