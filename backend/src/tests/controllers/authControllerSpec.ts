@@ -4,7 +4,7 @@ import { User, UserStore } from "../../models/User";
 
 const request = supertest(app);
 
-describe("Auth Controller", () => {
+describe("Auth Controller E2E", () => {
   const user = {
     firstname: "XXXXX",
     lastname: "XXXXX",
@@ -31,5 +31,14 @@ describe("Auth Controller", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.message).toEqual("Login successful");
+  });
+
+  it("should logout succesfully", async () => {
+    const response = await request.post("/api/auth/login").send(user);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toEqual("Login successful");
+    const response1 = await request.post("/api/auth/logout").send(user);
+    expect(response1.status).toBe(200);
+    expect(response1.body.message).toEqual("Logout successful");
   });
 });

@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { UserStore } from "../models/User";
-import jwt from "jsonwebtoken";
-import { generateJwtPayloadFromUser } from "../helper/helper";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { JwtUserPayload } from "../middlewares/authenticateToken";
 
 const store = new UserStore();
@@ -25,7 +24,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     );
 
     if (authenticatedUser) {
-      const jwtPayload = generateJwtPayloadFromUser(authenticatedUser);
+      const jwtPayload = {
+        id: authenticatedUser.id,
+        firstname: authenticatedUser.firstname,
+        lastname: authenticatedUser.lastname
+      } as JwtPayload;
+      
       const accessToken = jwt.sign(jwtPayload, process.env.JWT_SECRET, {
         expiresIn: process.env.ACCESS_TOKEN_EXPIRY
       });
@@ -44,7 +48,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         secure: true,
         sameSite: "strict"
       });
-      console.log("refreshToken", refreshToken);
       res.status(200).json({ message: "Login successful" });
     } else {
       res.status(401).json({ message: "Invalid credentials" });
@@ -68,8 +71,6 @@ export const refreshToken = async (
   }
 
   const refreshToken = req.cookies.refreshToken;
-  console.log("token", refreshToken);
-
   if (!refreshToken) {
     res.status(401).json({ error: "Refresh token not provided" });
     return;

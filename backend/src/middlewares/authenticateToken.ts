@@ -38,7 +38,6 @@ export const authenticateToken = async (
     }
 
     (req as AuthenticatedRequest).user = decoded;
-
     next();
   } catch (error) {
     console.error(error);

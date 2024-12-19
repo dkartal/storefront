@@ -15,7 +15,7 @@ export class UserStore {
       const sql = "SELECT * FROM users";
       const result = await conn.query(sql);
       conn.release();
-      return result.rows;
+      return result.rows as User[];
     } catch (err) {
       throw new Error(`Could not get users. Error: ${err}`);
     }
@@ -27,7 +27,7 @@ export class UserStore {
       const conn = await dbClient.connect();
       const result = await conn.query(sql, [id]);
       conn.release();
-      return result.rows[0];
+      return result.rows[0] as User;
     } catch (err) {
       throw new Error(`Could not find user ${id}. Error: ${err}`);
     }
@@ -54,7 +54,7 @@ export class UserStore {
         u.lastname,
         hashedPassword
       ]);
-      const user = result.rows[0];
+      const user = result.rows[0] as User;
       conn.release();
       return user;
     } catch (err) {
@@ -68,7 +68,7 @@ export class UserStore {
     password: string
   ): Promise<User | null> {
     const conn = await dbClient.connect();
-    const sql = "SELECT password FROM users WHERE firstname=$1 AND lastname=$2";
+    const sql = "SELECT * FROM users WHERE firstname=$1 AND lastname=$2";
     const result = await conn.query(sql, [firstname, lastname]);
     conn.release();
 
@@ -81,7 +81,7 @@ export class UserStore {
       }
 
       if (bcrypt.compareSync(password + pepper, user.password)) {
-        return user;
+        return user as User;
       }
     }
 

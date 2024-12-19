@@ -15,7 +15,7 @@ export const getAllUsers = async (_req: Request, res: Response) => {
 export const getUserById = async (req: Request, res: Response) => {
   try {
     const user: User = await store.getById(parseInt(req.params.id));
-    res.json(user);
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ error: err });
   }

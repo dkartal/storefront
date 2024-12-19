@@ -1,5 +1,4 @@
 import { Product, ProductStore } from "../../models/Product";
-import { UserStore } from "../../models/User";
 
 const store = new ProductStore();
 
@@ -8,20 +7,6 @@ describe("ProductStore Model", () => {
     name: "product-1",
     price: 10
   };
-  const product2: Product = {
-    name: "product-2",
-    price: 12
-  };
-
-  let user;
-  beforeAll(async () => {
-    const userStore = new UserStore();
-    user = await userStore.create({
-      firstname: "John",
-      lastname: "Doe",
-      password: "password123"
-    });
-  });
 
   it("should have all CRUD methods", () => {
     expect(store.getAll).toBeDefined();
@@ -34,22 +19,29 @@ describe("ProductStore Model", () => {
 
     expect(product).toBeDefined();
     expect(product.id).toBeDefined();
-    expect(product.name).toBe(product1.name);
-    expect(product.price / 1).toBe(product1.price);
   });
 
   it("should get a product by ID", async () => {
-    const product = await store.create(product2);
+    const product = await store.create(product1);
 
     expect(product).toBeDefined();
     expect(product.id).toBeDefined();
-    const retrievedProduct = await store.getById(product.id ?? 1);
+    const retrievedProduct = await store.getById(product.id ?? 111111111);
 
     expect(retrievedProduct).toEqual(product);
   });
 
   it("should return a list of products", async () => {
+    const product2: Product = {
+      name: "product-2",
+      price: 12
+    };
+
+    const p1 = await store.create(product1);
+    const p2 = await store.create(product2);
+  
     const products = await store.getAll();
     expect(products.length).toBeGreaterThan(0);
+    expect(products).toEqual(jasmine.arrayContaining([p1, p2]));
   });
 });

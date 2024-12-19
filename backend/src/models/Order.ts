@@ -38,7 +38,7 @@ export class OrderStore {
       const conn = await dbClient.connect();
       const result = await conn.query(this.sql, [user_id, "active"]);
       conn.release();
-      return result.rows[0];
+      return result.rows[0] as Order;
     } catch (err) {
       throw new Error(`Could not find order ${user_id}. Error: ${err}`);
     }
@@ -49,7 +49,7 @@ export class OrderStore {
       const conn = await dbClient.connect();
       const result = await conn.query(this.sql, [user_id, "active"]);
       conn.release();
-      return result.rows;
+      return result.rows as Order[];
     } catch (err) {
       throw new Error(`Could not find order ${user_id}. Error: ${err}`);
     }
@@ -79,7 +79,7 @@ export class OrderStore {
       return {
         ...createOrder,
         products: order.products
-      };
+      } as Order;
     } catch (err) {
       await conn.query("ROLLBACK");
       throw new Error(`Could not create new order. Error: ${err}`);
@@ -90,19 +90,18 @@ export class OrderStore {
 
   async addProduct(
     orderId: number,
-    productId: number,
-    quantity: number
-  ): Promise<Order> {
+    orderProduct: OrderProduct
+  ): Promise<OrderProduct> {
     const conn = await dbClient.connect();
     try {
       const orderResult = await conn.query(
         "INSERT INTO order_products (order_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *",
-        [orderId, productId, quantity]
+        [orderId, orderProduct.product_id, orderProduct.quantity]
       );
 
       const result = orderResult.rows[0];
 
-      return result;
+      return result as OrderProduct;
     } catch (err) {
       console.log(err);
       throw new Error(`Could not create new order.`);

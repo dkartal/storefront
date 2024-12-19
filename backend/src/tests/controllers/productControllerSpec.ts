@@ -5,7 +5,7 @@ import { Product } from "../../models/Product";
 
 const request = supertest(app);
 
-describe("product controller", () => {
+describe("product controller E2E", () => {
   beforeEach(async () => {
     const user: User = {
       firstname: "XXXX",
@@ -13,7 +13,6 @@ describe("product controller", () => {
       password: "XXXX"
     };
     await new UserStore().create(user);
-    await request.post("/api/auth/login").send(user);
   });
   it("should create a product", async () => {
     const response = await request

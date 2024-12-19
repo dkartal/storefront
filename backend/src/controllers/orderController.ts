@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { Order, OrderStore } from "../models/Order";
+import { Order, OrderProduct, OrderStore } from "../models/Order";
 import { AuthenticatedRequest } from "../middlewares/authenticateToken";
 
 const store = new OrderStore();
@@ -17,7 +17,7 @@ export const getCurrentOrderByUserId = async (
 
   try {
     const order: Order = await store.getCurrentOrderById(userId);
-    res.json(order);
+    res.status(200).json(order);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "cannot get current order" });
@@ -52,17 +52,6 @@ export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
     return;
   }
 
-  // check if order already exists
-  try {
-    const order: Order = await store.getCurrentOrderById(userId);
-    if (order) {
-      res.status(500).json({ message: "order already exists" });
-      return;
-    }
-  } catch (err) {
-    console.log(err);
-  }
-
   const { products } = req.body;
   const o = {
     user_id: userId,
@@ -84,7 +73,7 @@ export const addProduct = async (req: AuthenticatedRequest, res: Response) => {
   const quantity: number = parseInt(req.body.quantity);
 
   try {
-    const order: Order = await store.addProduct(orderId, productId, quantity);
+    const order: OrderProduct = await store.addProduct(orderId, {product_id: productId, quantity: quantity} as OrderProduct);
     res.status(201).json(order);
   } catch (err) {
     console.log(err);

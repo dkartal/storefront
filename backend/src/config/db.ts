@@ -18,7 +18,8 @@ if (
   throw new Error("Database environment variables are not properly set.");
 }
 
-export const dbClient = new Pool({
+
+const dbClient = new Pool({
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT, 10),
   user: process.env.DB_USER,

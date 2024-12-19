@@ -2,21 +2,10 @@ import { User, UserStore } from "../../models/User";
 
 const userStore = new UserStore();
 
-const user1 = {
+const user = {
   firstname: "firstName",
   lastname: "lastName",
   password: "password"
-} as User;
-const user2 = {
-  firstname: "firstName2",
-  lastname: "lastName2",
-  password: "password2"
-} as User;
-
-const user3 = {
-  firstname: "firstName3",
-  lastname: "lastName3",
-  password: "XXXXXXXXX"
 } as User;
 
 describe("User Model", () => {
@@ -28,52 +17,44 @@ describe("User Model", () => {
   });
 
   it("should create a new user", async () => {
-    const result = await userStore.create(user1);
+    const result = await userStore.create(user);
 
-    expect(result.firstname).toEqual(user1.firstname);
-    expect(result.lastname).toEqual(user1.lastname);
-    expect(result.password).not.toEqual(user1.password);
-  });
-
-  it("should return a list of users", async () => {
-    await userStore.create(user2);
-
-    const result = await userStore.getAll();
-    expect(result.length).toBeGreaterThan(0);
+    expect(result.firstname).toEqual(user.firstname);
+    expect(result.lastname).toEqual(user.lastname);
+    expect(result.password).not.toEqual(user.password);
   });
 
   it("should return the correct user", async () => {
-    const result = await userStore.create(user3);
+    const result = await userStore.create(user);
 
     expect(result.id).toBeDefined();
     expect(result).toEqual(await userStore.getById(result.id || 0));
   });
 
   it("should authenticate a user with valid credentials", async () => {
-    const result = await userStore.create({
-      firstname: "Johnsd",
-      lastname: "Doesdf",
-      password: "XXXXXXXXXXXsdf"
-    });
+    const result = await userStore.create(user);
     const isAuthenticated = await userStore.authenticate(
       result.firstname,
       result.lastname,
-      "XXXXXXXXXXXsdf"
+      user.password
     );
     expect(isAuthenticated).not.toBeNull();
   });
 
   it("should not authenticate a user with invalid credentials", async () => {
-    const result = await userStore.create({
-      firstname: "John",
-      lastname: "Doe",
-      password: "XXXXXXXXXXX"
-    });
+    const result = await userStore.create(user);
     const isAuthenticated = await userStore.authenticate(
       result.firstname,
       result.lastname,
-      "wrongpassword"
+      user.password + "wrongpassword"
     );
     expect(isAuthenticated).toBeNull();
+  });
+
+  it("should return a list of users", async () => {
+    const response = await userStore.create(user);
+
+    const result = await userStore.getAll();
+    expect(result).toContain(response);
   });
 });
