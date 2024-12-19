@@ -51,8 +51,8 @@
     What Happens?
 
     - Docker creates two PostgreSQL databases: dev_database and test_database.
-    - The dev database is used during development.
-    - The test database is used when running tests.
+    - The dev_database is used during development.
+    - The test_database is used when running tests.
 
       How to connect to you db?
 
@@ -74,7 +74,6 @@
 | ----------- | ------------------------- | ---------------- |
 | `POST`      | `/api/auth/login`         | login            |
 | `POST`      | `/api/auth/logout`        | logout           |
-| `POST`      | `/api/auth/refresh-token` | create a product |
 
 #### Products
 
@@ -103,29 +102,29 @@
 
 ## Models
 
-#### Product
+#### products
 
-    {
-        id: number;
+    (
+        id: number; (primary key)
         name: string;
         price: number;
         category?: string;
-    }
+    )
 
-#### User
+#### users
 
-    {
-        id: number;
+    (
+        id: number; (primary key)
         firstname: string;
         lastname: string;
         password: string; (encrypted)
-    }
+    )
 
-#### Orders
+#### orders
 
-    {
-        id?: number;
-        user_id: number;
+    (
+        id?: number; (primary key)
+        user_id: number; (foreign key to users table)
         order_status?: "active" | "complete";
-        products: { product_id: number; quantity: number }[];
-    }
+        products: { product_id: number; (foreign key to products table) quantity: number }[];
+    )
