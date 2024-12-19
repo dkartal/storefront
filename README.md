@@ -105,26 +105,37 @@
 #### products
 
     (
-        id: number; (primary key)
-        name: string;
-        price: number;
-        category?: string;
+        id: number, (primary key)
+        name: string,
+        price: number,
+        category: string,
     )
 
 #### users
 
     (
-        id: number; (primary key)
-        firstname: string;
-        lastname: string;
-        password: string; (encrypted)
+        id: number, (primary key)
+        firstname: string,
+        lastname: string,
+        password: string (encrypted)
     )
 
 #### orders
 
     (
-        id?: number; (primary key)
-        user_id: number; (foreign key to users table)
-        order_status?: "active" | "complete";
-        products: { product_id: number; (foreign key to products table) quantity: number }[];
+        id: number, (primary key)
+        user_id: number, (foreign key to users table)
+        order_status: "active" | "complete",
+        products: [
+            product_id: number, (foreign key to products table)
+            quantity: number
+        ]
+    )
+
+#### order_products
+    (
+        id: number, (primary key)
+        order_id: number, (foreign key to orders table)
+        product_id: number, (foreign key to products table)
+        quantity: number
     )
