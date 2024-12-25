@@ -1,9 +1,9 @@
 ## Tech Stack
 
-|               | Backend    | Database   |
-| ------------- | ---------- | ---------- |
-| **Framework** | Express.js | PostgreSQL |
-| **Language**  | TypeScript | SQL        |
+|               | Frontend   | Backend    | Database   |
+| ------------- | ---------- | ---------- | ---------- |
+| **Framework** | Angular    | Express.js | PostgreSQL |
+| **Language**  | TypeScript | TypeScript | SQL        |
 
 ## Setup
 
@@ -57,14 +57,25 @@
       How to connect to you db?
 
             psql -h localhost -p <PORT> -U <USER> -d <DB_NAME>
+5.  Install dependencies (backend)
 
-5.  Run the server (make sure to set ENV to dev in .env before running dev)
-
-        npm run dev:backend
+        npm run install:backend
 
 6.  Run the tests (make sure to set ENV to test in .env before running test)
 
         npm run test:backend
+
+7.  Run the server (make sure to set ENV to dev in .env before running dev)
+
+        npm run dev:backend
+
+8.  Install dependencies (frontend)
+
+        npm run install:frontend
+    
+7.  Run the frontend
+
+        npm run start:frontend
 
 ## API Endpoints
 

@@ -3,6 +3,7 @@ import { Order, OrderProduct } from '../models/Order';
 import { HttpClient } from '@angular/common/http';
 import { CartItem, ShoppingCart } from '../models/ShoppingCart';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 interface OrderResponse {
   success: boolean;
   orderId: string;
@@ -13,7 +14,7 @@ interface OrderResponse {
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:5000/api/orders';
+  private apiUrl = environment.apiUrl + '/orders';
 
   constructor(private http: HttpClient) { }
 
