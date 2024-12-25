@@ -1,0 +1,65 @@
+<div class="container mt-4">
+  <h1 class="text-center">Your Cart</h1>
+
+  <!-- Display message if cart is empty -->
+  <div *ngIf="cart.products.length === 0" class="text-center mt-5">
+    <p>Your cart is empty.</p>
+    <a routerLink="/products" class="btn btn-primary">Go to Products</a>
+  </div>
+
+  <!-- Cart Items -->
+  <div *ngIf="cart.products.length > 0">
+    <div class="row border-bottom py-3" *ngFor="let item of cart.products">
+      <!-- Product Image -->
+      <div class="col-3">
+        <img [src]="item.product.imageUrl" [alt]="item.product.name" class="img-fluid rounded shadow-sm"             routerLink="/products/{{ item.product.id }}"/>
+      </div>
+
+      <!-- Product Details -->
+      <div class="col-7 d-flex flex-column justify-content-center">
+        <h5>{{ item.product.name }}</h5>
+        <p class="text-success">Price: {{ item.product.price | currency }}</p>
+        <div class="quantity-controls">
+          <button
+            class="btn btn-outline-secondary btn-sm"
+            (click)="decrementQuantity(item.product.id)"
+            [disabled]="item.quantity === 1"
+          >
+            -
+          </button>
+          <span class="mx-2">{{ item.quantity }}</span>
+          <button
+            class="btn btn-outline-secondary btn-sm"
+            (click)="incrementQuantity(item.product.id)"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Remove Button -->
+      <div class="col-2 d-flex align-items-center">
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="removeItem(item.product.id)"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+
+    <!-- Total Price -->
+    <div class="row mt-4">
+      <div class="col-12 text-end">
+        <h4>Total: {{ cart.totalPrice | currency }}</h4>
+      </div>
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="row mt-3">
+      <div class="col-12 text-end">
+        <a routerLink="/checkout" class="btn btn-success">Proceed to Checkout</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -48,13 +48,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         secure: true,
         sameSite: "strict"
       });
-      res.status(200).json({ message: "Login successful" });
+      res.status(200).json({ success: true, message: "Login successful" });
     } else {
-      res.status(401).json({ message: "Invalid credentials" });
+      res.status(401).json({ success: false, message: "Invalid credentials" });
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: err });
+    res.status(500).json({ success: false, message: "Cannot Login" });
   }
 };
 
@@ -101,5 +101,5 @@ export const refreshToken = async (
 export const logout = async (req: Request, res: Response): Promise<void> => {
   res.clearCookie("token");
   res.clearCookie("refreshToken");
-  res.status(200).json({ message: "Logout successful" });
+  res.status(200).json({ success: true, message: "Logout successful" });
 };

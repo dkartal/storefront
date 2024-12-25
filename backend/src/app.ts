@@ -7,9 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGIN || "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: process.env.ALLOWED_ORIGIN,
     optionsSuccessStatus: 200
   })
 );

@@ -1,0 +1,45 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.img-fluid {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-select {
+  width: 100px;
+  margin-bottom: 1rem;
+}
+
+button {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
