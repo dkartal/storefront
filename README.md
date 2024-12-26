@@ -22,7 +22,7 @@
     Add the following
 
         ENV=dev
-        ALLOWED_ORIGIN=http://localhost:3000
+        ALLOWED_ORIGIN=http://localhost:4200
         SERVER_PORT=5000
 
         # database
