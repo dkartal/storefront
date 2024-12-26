@@ -1,3 +1,7 @@
+## Architecture
+
+![architecture](/docs/diagram.png)
+
 ## Tech Stack
 
 |               | Frontend   | Backend    | Database   |
