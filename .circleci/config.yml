@@ -35,11 +35,6 @@ jobs:
           command: |
             npm run deploy:frontend
       - run:
-          name: Run eb init
-          command: |
-            cd backend
-            eb init -r "us-east-1" "storefront"
-      - run:
           name: Deploy Backend
           command: |
             npm run deploy:backend

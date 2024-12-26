@@ -13,3 +13,4 @@ build/
 # Docker artifacts
 docker-compose.override.yml
 .vscode
+backend/database.json
