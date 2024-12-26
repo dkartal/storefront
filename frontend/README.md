@@ -1,6 +1,6 @@
 ## To Launch
 
-(The API that this frontend can consumed is deployed. see environment.ts)
+(The API that this frontend can consume is deployed already on aws eb. see environment.ts)
 
 1. install dependencies
 
