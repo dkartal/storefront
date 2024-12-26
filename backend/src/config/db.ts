@@ -3,10 +3,19 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const dbName =
-  process.env.ENV === "test"
-    ? process.env.TEST_DB_NAME
-    : process.env.DEV_DB_NAME;
+let dbName: string = "";
+
+if (process.env.ENV === "test") {
+  dbName = process.env.TEST_DB_NAME || "";
+} else if (process.env.ENV === "dev") {
+  dbName = process.env.DEV_DB_NAME || "";
+} else {
+  dbName = process.env.PROD_DB_NAME || "";
+}
+
+if (!dbName) {
+  throw new Error("Database environment variables are not properly set.");
+}
 
 if (
   !process.env.DB_HOST ||
@@ -18,6 +27,12 @@ if (
   throw new Error("Database environment variables are not properly set.");
 }
 
+// Enable SSL
+const sslConfig =
+  process.env.ENV === "prod"
+    ? { rejectUnauthorized: false } // For production
+    : false; // No SSL in non-production environments
+
 
 const dbClient = new Pool({
   host: process.env.DB_HOST,
@@ -25,7 +40,8 @@ const dbClient = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: dbName,
-  idleTimeoutMillis: 30000 // Close idle clients after 30 seconds
+  idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
+  ssl: sslConfig
 });
 
 export default dbClient;

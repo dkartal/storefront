@@ -3,12 +3,16 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "test:backend": "cd backend && npm run test",
+    "test:frontend": "cd frontend && npm run test",
     "start:backend": "cd backend && npm run start",
     "start:frontend": "cd frontend && npm run start",
     "dev:backend": "cd backend && npm run dev",
-    "build:backend": "cd backend && npm run build",
-    "test:backend": "cd backend && npm run test",
-    "install:backend": "cd backend && npm install",
-    "install:frontend": "cd frontend && npm install"
+    "deploy:frontend": "cd frontend && npm run deploy",
+    "deploy:backend": "cd backend && npm run deploy"
   }
 }
