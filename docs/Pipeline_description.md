@@ -21,3 +21,7 @@ The CI/CD pipeline for this project is built using CircleCI. The pipeline automa
 ### CircleCI environment variables
 
 ![env variables](env-variables-on-circle-ci.png)
+
+### Pipeline success example
+
+![pipeline](pipeline-1.png)

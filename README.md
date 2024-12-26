@@ -2,6 +2,19 @@
 
 ![architecture](/docs/diagram.png)
 
+This project consists of three main components:
+
+1. Frontend: An Angular application hosted on AWS S3, serving as the user interface.
+
+    http://storefront-udacity.s3-website-us-east-1.amazonaws.com
+    
+2. Backend: A Node.js application powered by Express.js, deployed to AWS Elastic Beanstalk to handle API requests and business logic.
+
+    http://storefront-env.eba-63kmh5t7.us-east-1.elasticbeanstalk.com
+
+3. Database: A PostgreSQL database hosted on AWS RDS, used for storing and managing application data.
+
+
 ## Tech Stack
 
 |               | Frontend   | Backend    | Database   |
@@ -9,7 +22,7 @@
 | **Framework** | Angular    | Express.js | PostgreSQL |
 | **Language**  | TypeScript | TypeScript | SQL        |
 
-## Setup
+## Local Setup
 
 1.  Make sure Node.js is installed
 
