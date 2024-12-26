@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "aws s3 sync ./dist/frontend/browser s3://storefront-udacity --delete --profile storefront"
+    "deploy": "aws s3 sync ./dist/frontend/browser s3://storefront-udacity --delete"
   },
   "private": true,
   "dependencies": {

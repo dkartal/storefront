@@ -13,7 +13,8 @@
     "migrate:dev:reset": "db-migrate reset --env dev",
     "migrate:test:up": "db-migrate up --env test",
     "migrate:test:down": "db-migrate down --env test",
-    "migrate:test:reset": "db-migrate reset --env test"
+    "migrate:test:reset": "db-migrate reset --env test",
+    "deploy": "eb deploy"
   },
   "author": "",
   "license": "ISC",
