@@ -12,11 +12,11 @@
         class="form-control"
         [(ngModel)]="checkoutForm.fullname"
         required
-        minlength="5"
+        minlength="10"
         #fullname="ngModel"
       />
       <div *ngIf="fullname.invalid && fullname.touched" class="text-danger">
-        Full Name is required and must be at least 5 characters.
+        Full Name is required and must be at least 10 characters.
       </div>
     </div>
 
@@ -30,6 +30,7 @@
         class="form-control"
         [(ngModel)]="checkoutForm.email"
         required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
         #email="ngModel"
       />
       <div *ngIf="email.invalid && email.touched" class="text-danger">
@@ -71,7 +72,7 @@
         *ngIf="creditCardNumber.invalid && creditCardNumber.touched"
         class="text-danger"
       >
-        Credit Card Number must be 16 digits.
+        Credit Card Number is required and must be 16 digits.
       </div>
     </div>
 
