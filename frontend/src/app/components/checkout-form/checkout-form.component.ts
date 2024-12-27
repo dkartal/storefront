@@ -31,4 +31,24 @@ export class CheckoutFormComponent {
       this.notificationService.showNotification("Please fill out all required fields correctly!");
     }
   }
+
+  // Handlers for ngModelChange
+  onFullnameChange(value: string): void {
+    this.checkoutForm.fullname = value;
+  }
+
+  onEmailChange(value: string): void {
+    console.log('Email changed:', value);
+    this.checkoutForm.email = value;
+  }
+
+  onAddressChange(value: string): void {
+    console.log('Address changed:', value);
+    this.checkoutForm.address = value;
+  }
+
+  onCreditCardNumberChange(value: string): void {
+    console.log('Credit Card Number changed:', value);
+    this.checkoutForm.creditCardNum = value;
+  }
 }

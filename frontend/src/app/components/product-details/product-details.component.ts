@@ -38,4 +38,8 @@ export class ProductDetailsComponent implements OnInit {
       this.cartService.addToCart(this.product, this.selectedQuantity);
     }
   }
+
+  onQuantityChange(value: number): void {
+    this.selectedQuantity = value;
+  }
 }

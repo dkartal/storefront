@@ -21,6 +21,7 @@
             id="quantity"
             class="form-select"
             [(ngModel)]="selectedQuantity"
+            (ngModelChange)="onQuantityChange($event)"
           >
             <option *ngFor="let qty of [1, 2, 3, 4, 5]" [value]="qty">
               {{ qty }}
