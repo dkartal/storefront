@@ -3,40 +3,40 @@
       <!-- Left Column: Product Image -->
       <div class="col-md-6">
         <img
-          [src]="product?.imageUrl"
-          [alt]="product?.name"
+          [src]="product.imageUrl"
+          [alt]="product.name"
           class="img-fluid rounded shadow"
         />
       </div>
   
       <!-- Right Column: Product Details -->
       <div class="col-md-6">
-        <h2>{{ product?.name }}</h2>
-        <p class="text-success">Price: {{ product?.price | currency }}</p>
+        <h2>{{ product.name }}</h2>
+        <p class="text-success">Price: {{ product.price | currency }}</p>
   
         <!-- Quantity Selector -->
-        <div class="mb-3">
-          <label for="quantity" class="form-label">Quantity</label>
-          <select
-            id="quantity"
-            class="form-select"
-            [(ngModel)]="selectedQuantity"
-            (ngModelChange)="onQuantityChange($event)"
-          >
-            <option *ngFor="let qty of [1, 2, 3, 4, 5]" [value]="qty">
-              {{ qty }}
-            </option>
-          </select>
-        </div>
-  
+        <app-quantity-selector
+        [quantity]="getQuantity()"
+        (decrement)="decrementQuantity()"
+        (increment)="incrementQuantity()"
+        >
+        </app-quantity-selector>
         <!-- Buttons -->
         <div class="d-flex flex-column">
           <button
-            class="btn btn-primary mb-2"
-            (click)="addToCart()"
-          >
-            Add to Cart
-          </button>
+          *ngIf="getQuantity() <= 0"
+          class="btn btn-primary"
+          (click)="incrementQuantity()"
+        >
+          Add to Cart
+        </button>
+        <button
+          *ngIf="getQuantity() > 0"
+          class="btn btn-primary"
+          (click)="removeFromCart()"
+        >
+          Remove
+        </button>
           <button
             class="btn btn-secondary"
             routerLink="/products"

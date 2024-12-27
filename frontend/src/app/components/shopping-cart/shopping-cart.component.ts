@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CartService } from '../../services/cartService';
 import { ShoppingCart } from '../../models/ShoppingCart';
+import { Product } from '../../models/Product';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -28,13 +29,13 @@ export class ShoppingCartComponent implements OnInit {
     this.cart = this.cartService.getCart();
   }
 
-  incrementQuantity(productId: number): void {
-    this.cartService.incrementQuantity(productId);
+  incrementQuantity(product: Product): void {
+    this.cartService.incrementQuantity(product);
     this.cart = this.cartService.getCart();
   }
 
-  decrementQuantity(productId: number): void {
-    this.cartService.decrementQuantity(productId);
+  decrementQuantity(product: Product): void {
+    this.cartService.decrementQuantity(product);
     this.cart = this.cartService.getCart();
   }
 }

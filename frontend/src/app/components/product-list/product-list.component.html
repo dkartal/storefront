@@ -18,21 +18,37 @@
           <p class="card-text text-success">
             Price: {{ product.price | currency }}
           </p>
+
+          <app-quantity-selector
+          [quantity]="getQuantity(product)"
+          (decrement)="decrementQuantity(product)"
+          (increment)="incrementQuantity(product)"
+          ></app-quantity-selector>
+
           <!-- Product Details Button -->
-          <a
+          <button
             class="btn btn-primary w-100"
-            routerLink="/products/{{ product.id }}"
+            (click)="viewDetails(product)"
           >
             View Details
-          </a>
+        </button>
 
           <!-- Add to Cart Button -->
           <button
+            *ngIf="getQuantity(product) <= 0"
             class="btn btn-primary w-100"
-            (click)="addToCart(product)"
+            (click)="incrementQuantity(product)"
           >
             Add to Cart
           </button>
+
+          <button
+          *ngIf="getQuantity(product) > 0"
+          class="btn btn-primary w-100"
+          (click)="removeFromCart(product.id)"
+        >
+          Remove
+        </button>
         </div>
       </div>
     </div>

@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { NotificationComponent } from './components/notification/notification.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { RouterModule } from '@angular/router';
+import { QuantitySelectorComponent } from './components/quantity-selector/quantity-selector.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +24,16 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     CheckoutFormComponent,
     OrderConfirmationComponent,
     NotificationComponent,
-    NavbarComponent
+    NavbarComponent,
+    QuantitySelectorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot([], {
+      bindToComponentInputs: true // <-- enable this feature
+    })
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]

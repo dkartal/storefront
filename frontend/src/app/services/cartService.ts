@@ -33,21 +33,6 @@ export class CartService {
     return this.cart;
   }
 
-  addToCart(product: Product, quantity: number = 1) {
-    const existingProduct = this.cart.products.find(p => p.product.id === product.id);
-    if (existingProduct) {
-      existingProduct.quantity += Number(quantity);
-    } else {
-      const newCartItem: CartItem = { product, quantity };
-      this.cart.products.push(newCartItem);
-    }
-    this.calculateTotal();
-    this.saveCart();
-    this.notificationService.showNotification(
-      `${quantity} x ${product.name} added to your cart.`
-    );
-  }
-
   private calculateTotal() {
     this.cart.totalPrice = this.cart.products.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   }
@@ -61,26 +46,53 @@ export class CartService {
       `${productToRemove?.product.name} removed from your cart.`
     );
   }
+
   clearCart() {
     this.cart = { products: [], totalPrice: 0 };
     this.saveCart();
   }
   
-  incrementQuantity(productId: number) {
-    const product = this.cart.products.find(p => p.product.id === productId);
-    if (product) {
-      product.quantity++;
+  incrementQuantity(product: Product) {
+    if (!product) {
+      return;
+    }
+    const productFound = this.cart.products.find(p => p.product.id === product.id);
+    if (productFound) {
+      productFound.quantity++;
+      this.notificationService.showNotification(
+        `${productFound.quantity} x ${productFound.product.name} added to your cart.`
+      );
+    } else {
+      const cartItem: CartItem = { product, quantity: 1 };
+      this.cart.products.push(cartItem);
+      this.notificationService.showNotification(
+        `1 x ${product.name} added to your cart.`
+      );
+    }
+    this.calculateTotal();
+    this.saveCart();
+  }
+
+  decrementQuantity(product: Product) {
+    if (!product) {
+      return;
+    }
+    const productFound = this.cart.products.find(p => p.product.id === product.id);
+    if (productFound) {
+      productFound.quantity--;
+
+      // Remove the product if the quantity is 0
+      if (productFound.quantity <= 0) {
+        this.removeFromCart(productFound.product.id);
+      }
+
       this.calculateTotal();
       this.saveCart();
     }
   }
 
-  decrementQuantity(productId: number) {
-    const product = this.cart.products.find(p => p.product.id === productId);
-    if (product && product.quantity > 1) {
-      product.quantity--;
-      this.calculateTotal();
-      this.saveCart();
-    }
+  getQuantity(product: Product): number {
+    const productFound = this.cart.products.find(p => p.product.id === product.id);
+    return productFound ? productFound.quantity : 0;
   }
 }

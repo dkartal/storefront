@@ -19,22 +19,14 @@
       <div class="col-7 d-flex flex-column justify-content-center">
         <h5>{{ item.product.name }}</h5>
         <p class="text-success">Price: {{ item.product.price | currency }}</p>
-        <div class="quantity-controls">
-          <button
-            class="btn btn-outline-secondary btn-sm"
-            (click)="decrementQuantity(item.product.id)"
-            [disabled]="item.quantity === 1"
-          >
-            -
-          </button>
-          <span class="mx-2">{{ item.quantity }}</span>
-          <button
-            class="btn btn-outline-secondary btn-sm"
-            (click)="incrementQuantity(item.product.id)"
-          >
-            +
-          </button>
-        </div>
+
+        <app-quantity-selector
+        [quantity]="item.quantity"
+        (decrement)="decrementQuantity(item.product)"
+        (increment)="incrementQuantity(item.product)"
+        >
+  
+        </app-quantity-selector>
       </div>
 
       <!-- Remove Button -->
